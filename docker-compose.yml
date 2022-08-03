@@ -1,0 +1,90 @@
+version: "3.9"
+services:
+  Drupal:
+    image: drupal
+    container_name: Drupal
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      #- "443:443"
+    volumes:
+      - //c/Users/kkelm/GitHub/drupal/modules:/opt/drupal/web/modules
+      - //c/Users/kkelm/GitHub/drupal/profiles:/opt/drupal/web/profiles
+      - //c/Users/kkelm/GitHub/drupal/themes:/opt/drupal/web/themes
+      - //c/Users/kkelm/GitHub/drupal/sites:/opt/drupal/web/sites
+    #deploy:
+    #  replicas: 2
+    #  update_config:
+    #    parallelism: 2
+    #    delay: 10s
+    #  restart_policy:
+    #    condition: on-failure
+    networks:
+      - mysql-network
+
+  MySQL:
+    image: mysql:8.0.30
+    container_name: Drupal-MySQL
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - //c/Users/kkelm/GitHub/drupal/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=drupal
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=123abc
+      - MYSQL_ROOT_PASSWORD=m3tallica
+      - VIRTUAL_PORT=3306
+    #  - LETSENCRYPT_HOST=your-website-one.com 
+    #  - LETSENCRYPT_EMAIL=your.email@domain.com
+    #deploy:
+    #  replicas: 2
+    #  update_config:
+    #    parallelism: 2
+    #    delay: 10s
+    #  restart_policy:
+    #    condition: on-failure
+    networks:
+      - mysql-network
+
+  Adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    networks:
+      - mysql-network
+
+  #test-NGINX:
+    #image: nginx:stable
+    #restart: always
+    #volumes:
+    #  - ./nginx.conf:/etc/nginx/nginx.conf
+    #  - ./test:/usr/share/nginx/html/test
+    #environment:
+    #  - VIRTUAL_HOST=net.localhost
+    #  - VIRTUAL_PORT=80
+    #  - LETSENCRYPT_HOST=your-website-one.com 
+    #  - LETSENCRYPT_EMAIL=your.email@domain.com
+    #deploy:
+    #  replicas: 2
+    #  update_config:
+    #    parallelism: 2
+    #    delay: 10s
+    #  restart_policy:
+    #    condition: on-failure
+    #container_name: test-NGINX
+    #expose:
+    #  - 80
+    
+
+networks:
+  mysql-network:
+#  default:
+#    external:
+#      name: nginx-proxy
+
+#volumes:
+#  devfecta-react-php:
+#  devfecta-mysql:
