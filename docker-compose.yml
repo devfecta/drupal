@@ -1,4 +1,8 @@
 version: "3.9"
+
+volumes:
+  database:
+
 services:
   Drupal:
     image: drupal
@@ -29,7 +33,9 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - //c/Users/kkelm/GitHub/drupal/mysql:/var/lib/mysql
+    #  - mysql-database
+      - mysql-database:/var/lib/mysql
+    #  - //c/Users/kkelm/GitHub/drupal/mysql:/var/lib/mysql
     environment:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
@@ -85,6 +91,7 @@ networks:
 #    external:
 #      name: nginx-proxy
 
-#volumes:
+volumes:
+  mysql-database:
 #  devfecta-react-php:
 #  devfecta-mysql:
