@@ -31,11 +31,11 @@ services:
     volumes:
       - //c/Users/kkelm/GitHub/drupal/mysql:/var/lib/mysql
     environment:
-      - MYSQL_DATABASE=drupal
-      - MYSQL_USER=admin
-      - MYSQL_PASSWORD=123abc
-      - MYSQL_ROOT_PASSWORD=m3tallica
-      - VIRTUAL_PORT=3306
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - VIRTUAL_PORT=${VIRTUAL_PORT}
     #  - LETSENCRYPT_HOST=your-website-one.com 
     #  - LETSENCRYPT_EMAIL=your.email@domain.com
     #deploy:
