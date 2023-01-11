@@ -1,8 +1,5 @@
 version: "3.9"
 
-volumes:
-  database:
-
 services:
   Drupal:
     image: drupal
@@ -12,10 +9,15 @@ services:
       - "80:80"
       #- "443:443"
     volumes:
-      - //c/Users/kkelm/GitHub/drupal/modules:/opt/drupal/web/modules
-      - //c/Users/kkelm/GitHub/drupal/profiles:/opt/drupal/web/profiles
-      - //c/Users/kkelm/GitHub/drupal/themes:/opt/drupal/web/themes
-      - //c/Users/kkelm/GitHub/drupal/sites:/opt/drupal/web/sites
+      #- /opt/drupal/web
+      #- ${DRUPAL_LOCATION}:/var/www/html
+      - ${DRUPAL_LOCATION}/:/opt/drupal/web
+      #- ${DRUPAL_LOCATION}/modules:/opt/drupal/web/modules
+      #- ${DRUPAL_LOCATION}/profiles:/opt/drupal/web/profiles
+      #- ${DRUPAL_LOCATION}/themes:/opt/drupal/web/themes
+      #- ${DRUPAL_LOCATION}/sites:/opt/drupal/web/sites
+      # For updates
+      - ${DRUPAL_UPDATES_LOCATION}:/home/updates
     #deploy:
     #  replicas: 2
     #  update_config:
@@ -24,7 +26,15 @@ services:
     #  restart_policy:
     #    condition: on-failure
     networks:
-      - mysql-network
+      - drupal-network
+    deploy:
+        resources:
+            limits:
+              cpus: "0.5"
+              memory: 2G
+            reservations:
+              cpus: "0.25"
+              memory: 512M
 
   MySQL:
     image: mysql:8.0.30
@@ -33,8 +43,8 @@ services:
     ports:
       - "3306:3306"
     volumes:
-    #  - mysql-database
       - mysql-database:/var/lib/mysql
+    #  - mysql-database:/var/lib/mysql
     #  - //c/Users/kkelm/GitHub/drupal/mysql:/var/lib/mysql
     environment:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
@@ -52,16 +62,33 @@ services:
     #  restart_policy:
     #    condition: on-failure
     networks:
-      - mysql-network
+      - drupal-network
+    deploy:
+        resources:
+            limits:
+              cpus: "0.5"
+              memory: 2G
+            reservations:
+              cpus: "0.25"
+              memory: 512M
 
   Adminer:
     image: adminer
+    container_name: Drupal-Adminer
     restart: always
     ports:
       - "8080:8080"
     networks:
-      - mysql-network
-
+      - drupal-network
+    deploy:
+        resources:
+            limits:
+              cpus: "0.5"
+              memory: 2G
+            reservations:
+              cpus: "0.25"
+              memory: 512M
+      
   #test-NGINX:
     #image: nginx:stable
     #restart: always
@@ -86,12 +113,18 @@ services:
     
 
 networks:
-  mysql-network:
+  drupal-network:
+  
 #  default:
 #    external:
 #      name: nginx-proxy
 
 volumes:
   mysql-database:
+    driver: local
+    driver_opts:
+       o: bind
+       type: none
+       device: ${DRUPAL_LOCATION}/mysql/_data
 #  devfecta-react-php:
 #  devfecta-mysql:
