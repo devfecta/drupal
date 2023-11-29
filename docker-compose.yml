@@ -1,3 +1,10 @@
+
+# Run to install the latest version of Drupal.
+# curl -sSL https://www.drupal.org/download-latest/tar.gz | tar -xz --strip-components=1
+# mkdir sites/default/files
+# mkdir mysql/_data
+# cp sites/default/default.settings.php sites/default/settings.php
+# Spin up the Docker Container.
 # docker compose --env-file ./.env up
 
 version: "3.9"
