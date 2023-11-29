@@ -4,7 +4,7 @@ version: "3.9"
 
 services:
   Drupal:
-    image: drupal
+    image: drupal:php8.1-apache-bookworm
     container_name: Drupal
     restart: unless-stopped
     ports:
