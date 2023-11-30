@@ -5,7 +5,7 @@
 # Ignoring the mysql directory for now. In the future, may need to commit it
 # and setup environment variables to the *settings.php files.
 #/mysql/_data/*
-/mysql/_data/*.pem
+/mysql/_data
 !/mysql/_data/drupal
 !/mysql/_data/mysql
 !/mysql/_data/performance_schema
