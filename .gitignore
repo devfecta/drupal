@@ -6,6 +6,10 @@
 # and setup environment variables to the *settings.php files.
 #/mysql/_data/*
 /mysql/_data/*.pem
+!/mysql/_data/drupal
+!/mysql/_data/mysql
+!/mysql/_data/performance_schema
+!/mysql/_data/sys
 #.env
 
 # Ignore configuration files that may contain sensitive information
@@ -52,4 +56,4 @@
 #/README.txt
 #/robots.txt
 #/update.php
-/web.config
+#/web.config
