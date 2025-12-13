@@ -1,8 +1,6 @@
-version: "3.9"
-
 services:
   Drupal:
-    image: drupal
+    image: drupal:10.5.8-php8.4-apache
     container_name: Drupal
     restart: unless-stopped
     ports:
@@ -11,7 +9,8 @@ services:
     volumes:
       #- /opt/drupal/web
       #- ${DRUPAL_LOCATION}:/var/www/html
-      - ${DRUPAL_LOCATION}/:/opt/drupal/web
+      #- ${DRUPAL_LOCATION}:/opt/drupal/web
+      - drupal-site:/opt/drupal/web
       #- ${DRUPAL_LOCATION}/modules:/opt/drupal/web/modules
       #- ${DRUPAL_LOCATION}/profiles:/opt/drupal/web/profiles
       #- ${DRUPAL_LOCATION}/themes:/opt/drupal/web/themes
@@ -30,14 +29,14 @@ services:
     deploy:
         resources:
             limits:
-              cpus: "0.5"
+              cpus: "2"
               memory: 2G
             reservations:
-              cpus: "0.25"
+              cpus: "1"
               memory: 512M
 
   MySQL:
-    image: mysql:8.0.30
+    image: mysql:8.0.44
     container_name: Drupal-MySQL
     restart: always
     ports:
@@ -66,14 +65,14 @@ services:
     deploy:
         resources:
             limits:
-              cpus: "0.5"
+              cpus: "2"
               memory: 2G
             reservations:
-              cpus: "0.25"
+              cpus: "1"
               memory: 512M
 
   Adminer:
-    image: adminer
+    image: adminer:5.4.1-standalone
     container_name: Drupal-Adminer
     restart: always
     ports:
@@ -125,6 +124,12 @@ volumes:
     driver_opts:
        o: bind
        type: none
-       device: ${DRUPAL_LOCATION}/mysql/_data
+       device: ${MYSQL_LOCATION}/mysql/_data
+  drupal-site:
+    driver: local
+    driver_opts:
+       o: bind
+       type: none
+       device: ${DRUPAL_LOCATION}
 #  devfecta-react-php:
 #  devfecta-mysql:
