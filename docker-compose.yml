@@ -16,7 +16,7 @@ version: "3.9"
 
 services:
   Drupal:
-    image: drupal:php8.1-apache-bookworm
+    image: drupal:10.5.8-php8.4-apache
 >>>>>>> b14aead6e7f81dc30e921c2eefb7e3383b9f847e
     container_name: Drupal
     restart: unless-stopped
@@ -142,7 +142,7 @@ volumes:
     driver_opts:
        o: bind
        type: none
-       device: ${MYSQL_LOCATION}/mysql/_data
+       device: ${MYSQL_LOCATION}
   drupal-site:
     driver: local
     driver_opts:
