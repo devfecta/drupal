@@ -4,18 +4,10 @@
 
 # Ignoring the mysql directory for now. In the future, may need to commit it
 # and setup environment variables to the *settings.php files.
-
-/mysql/_data/*
-/mysql/_data/*.pem
-!/mysql/_data/drupal
-!/mysql/_data/mysql
-!/mysql/_data/performance_schema
-!/mysql/_data/sys
-
-#.env
+/mysql
+/.env
 
 # Ignore configuration files that may contain sensitive information
-<<<<<<< HEAD
 /www/sites/*/*settings*.php
 /www/sites/*/*services*.yml
 
@@ -45,10 +37,10 @@
 /www/themes/README.txt
 /www/vendor
 /www/.csslintrc
-/www/.editorconfig
+/.editorconfig
 /www/.eslintignore
 /www/.eslintrc.json
-/www/.gitattributes
+/.gitattributes
 /www/.htaccess
 /www/autoload.php
 /www/composer.json
@@ -60,49 +52,3 @@
 /www/robots.txt
 /www/update.php
 /www/web.config
-=======
-#/sites/*/*settings*.php
-#/sites/*/*services*.yml
-
-# Ignore paths that may contain user-generated content
-#/sites/*/files
-#/sites/*/public
-#/sites/*/private
-#/sites/*/files-public
-#/sites/*/files-private
-
-# Ignore paths that may contain temporary files
-#/sites/*/translations
-#/sites/*/tmp
-#/sites/*/cache
-
-# Ignore testing related files
-#/sites/simpletest
-
-# Ignore drupal core (if not versioning drupal sources)
-#/core
-#/modules/README.txt
-#/profiles/README.txt
-#/sites/README.txt
-#/sites/example.sites.php
-#/sites/example.settings.local.php
-#/sites/development.services.yml
-#/themes/README.txt
-#/vendor
-#/.csslintrc
-#/.editorconfig
-#/.eslintignore
-#/.eslintrc.json
-#/.gitattributes
-#/.htaccess
-#/autoload.php
-#/composer.json
-#/composer.lock
-#/example.gitignore
-#/index.php
-#/LICENSE.txt
-#/README.txt
-#/robots.txt
-#/update.php
-#/web.config
->>>>>>> b14aead6e7f81dc30e921c2eefb7e3383b9f847e
