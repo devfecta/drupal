@@ -1,8 +1,6 @@
-<<<<<<< HEAD
-services:
-  Drupal:
-    image: drupal:10.5.8-php8.4-apache
-=======
+
+
+
 
 # Run to install the latest version of Drupal.
 # curl -sSL https://www.drupal.org/download-latest/tar.gz | tar -xz --strip-components=1
@@ -11,13 +9,9 @@ services:
 # cp sites/default/default.settings.php sites/default/settings.php
 # Spin up the Docker Container.
 # docker compose --env-file ./.env up
-
-version: "3.9"
-
 services:
   Drupal:
     image: drupal:10.5.8-php8.4-apache
->>>>>>> b14aead6e7f81dc30e921c2eefb7e3383b9f847e
     container_name: Drupal
     restart: unless-stopped
     ports:
@@ -27,7 +21,7 @@ services:
       #- /opt/drupal/web
       #- ${DRUPAL_LOCATION}:/var/www/html
       #- ${DRUPAL_LOCATION}:/opt/drupal/web
-      - drupal-site:/opt/drupal/web
+      - ${DRUPAL_LOCATION}:/opt/drupal/web
       #- ${DRUPAL_LOCATION}/modules:/opt/drupal/web/modules
       #- ${DRUPAL_LOCATION}/profiles:/opt/drupal/web/profiles
       #- ${DRUPAL_LOCATION}/themes:/opt/drupal/web/themes
