@@ -1,0 +1,17 @@
+# https://www.drupal.org/docs/drupal-apis/routing-system/structure-of-routes
+mymodule.simplecontent:
+  path: '/mycustompath'
+  defaults:
+    _controller: '\Drupal\mymodule\Controller\FirstController::simpleContent'
+    _title: 'My Custom Page'
+  requirements:
+    _permission: 'access content'
+
+mymodule.variablecontent:
+  path: '/mycustompath/{name_1}/{name_2}'
+  defaults:
+    _controller: '\Drupal\mymodule\Controller\FirstController::variableContent'
+    _title: 'Custom Variable Page'
+  requirements:
+    _permission: 'access content'
+    

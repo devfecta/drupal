@@ -18,14 +18,8 @@ services:
       - "80:80"
       #- "443:443"
     volumes:
-      #- /opt/drupal/web
-      #- ${DRUPAL_LOCATION}:/var/www/html
+      - ${DRUPAL_LOCATION}:/var/www/html
       #- ${DRUPAL_LOCATION}:/opt/drupal/web
-      - ${DRUPAL_LOCATION}:/opt/drupal/web
-      #- ${DRUPAL_LOCATION}/modules:/opt/drupal/web/modules
-      #- ${DRUPAL_LOCATION}/profiles:/opt/drupal/web/profiles
-      #- ${DRUPAL_LOCATION}/themes:/opt/drupal/web/themes
-      #- ${DRUPAL_LOCATION}/sites:/opt/drupal/web/sites
       # For updates
       - ${DRUPAL_UPDATES_LOCATION}:/home/updates
       #- ${DRUPAL_LOCATION}/apache2.conf:/etc/apache2/apache2.conf
@@ -46,6 +40,8 @@ services:
             reservations:
               cpus: "1"
               memory: 512M
+    depends_on:
+      - MySQL
 
   MySQL:
     image: mysql:8.0.44
@@ -55,7 +51,6 @@ services:
       - "3306:3306"
     volumes:
       - mysql-database:/var/lib/mysql
-    #  - mysql-database:/var/lib/mysql
     #  - //c/Users/kkelm/GitHub/drupal/mysql:/var/lib/mysql
     environment:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
@@ -143,5 +138,3 @@ volumes:
        o: bind
        type: none
        device: ${DRUPAL_LOCATION}
-#  devfecta-react-php:
-#  devfecta-mysql:
