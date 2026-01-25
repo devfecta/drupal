@@ -1,0 +1,8 @@
+# https://www.drupal.org/docs/drupal-apis/menu-api/providing-module-defined-menu-links
+mymodule.simplecontentpage:
+  title: 'Simple Content Link'
+  description: 'Link to the simplecontent() method'
+  route_name: mymodule.simplecontent
+  weight: 10
+  menu_name: main
+  
