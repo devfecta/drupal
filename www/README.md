@@ -1,15 +1,3 @@
-## Required .env File Settings
-DRUPAL_LOCATION=/c/<Location of Drupal Site>
-DRUPAL_UPDATES_LOCATION=/c/<Location of the files for updateing Drupal>
-
-MYSQL_LOCATION=./mysql/_data
-
-MYSQL_DATABASE=<Name of Drupal Database>
-MYSQL_USER=<MySQL Default Username>
-MYSQL_PASSWORD=<MySQL Default Password>
-MYSQL_ROOT_PASSWORD=<MySQL Root Password>
-VIRTUAL_PORT=3306
-
 <img alt="Drupal Logo" src="https://www.drupal.org/files/Wordmark_blue_RGB.png" height="60px">
 
 Drupal is an open source content management platform supporting a variety of
