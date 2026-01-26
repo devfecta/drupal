@@ -1,0 +1,70 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the rsvplist module.
+ * https://api.drupal.org/api/drupal/core!lib!Drupal!Core!Database!database.api.php/function/hook_schema/10
+ * https://www.drupal.org/docs/7/api/schema-api/data-types
+ */
+
+function rsvplist_schema() {
+    $schema['rsvplist'] = [
+      'description' => 'Table to store RSVP information.',
+      'fields' => [
+        'id' => [
+            'description' => 'Primary Key: Unique RSVP ID.',
+            'type' => 'serial',
+            'size' => 'small',
+            'unsigned' => TRUE,
+            'not null' => TRUE,
+        ],
+        'uid' => [
+            'description' => 'The {users}.uid of the user RSVPing.',
+            'type' => 'int',
+            'not null' => TRUE,
+            'default' => 0,
+        ],
+        'nid' => [
+            'description' => 'The {node}.nid of the event being RSVPed to.',
+            'type' => 'int',
+            'unsigned' => TRUE,
+            'not null' => TRUE,
+            'default' => 0,
+        ],
+        'mail' => [
+            'description' => 'Email address of the person RSVPing.',
+            'type' => 'varchar',
+            'length' => 64,
+            'not null' => FALSE,
+            'default' => '',
+        ],
+        'created' => [
+            'description' => 'The time the RSVP was made.',
+            'type' => 'int',
+            'not null' => TRUE,
+            'default' => 0,
+        ],
+      ],
+      'primary key' => ['id'],
+      'indexes' => [
+        'node' => ['nid'],
+        'node_user' => ['nid', 'uid'],
+      ],
+    ];
+
+    $schema['rsvplist_enabled'] = [
+      'description' => 'Table to store which nodes have RSVP enabled.',
+      'fields' => [
+        'nid' => [
+            'description' => 'The {node}.nid of the event with RSVP enabled.',
+            'type' => 'int',
+            'unsigned' => TRUE,
+            'not null' => TRUE,
+            'default' => 0,
+        ],
+      ],
+      'primary key' => ['nid'],
+    ];
+    
+    return $schema;
+}

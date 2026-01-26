@@ -1,0 +1,12 @@
+view rsvplist:
+  title: 'Access to View RSVP Form'
+  description: 'Permission to access the RSVP form demo page.'
+  # restrict access: TRUE
+access rsvplist report:
+  title: 'Access to View RSVP List'
+  description: 'Permission to access the list of RSVPs for events.'
+  # restrict access: TRUE
+administer rsvplist:
+  title: 'Administer RSVP List Settings'
+  description: 'Permission to administer RSVP List settings.'
+  restrict access: TRUE
