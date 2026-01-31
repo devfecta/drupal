@@ -1,3 +1,4 @@
+# https://www.drupal.org/docs/drupal-apis/routing-system/structure-of-routes
 rsvplist.formdemo:
   path: '/rsvplistdemo'
   defaults:
@@ -5,3 +6,11 @@ rsvplist.formdemo:
     _title: 'RSVP Form Demo'
   requirements:
     _permission: 'view rsvplist' # Set in the rsvplist.permissions.yml file.
+
+rsvplist.admin_settings:
+  path: /admin/config/content/rsvplist
+  defaults:
+    _form: \Drupal\rsvplist\Form\RSVPSettingsForm
+    _title: RSVP List Settings
+  requirements:
+    _permission: administer rsvplist

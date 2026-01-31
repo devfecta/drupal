@@ -1,0 +1,12 @@
+# Refers back to the settings defined in rsvplist.settings.yml
+rsvplist.settings:
+  type: config_object
+  label: 'RSVP List Content Type settings'
+  mapping:
+    # Within the rsvplist.settings configuration object, define the schema for the allowed_types setting. 
+    allowed_types:
+      type: sequence
+      label: 'Content types the RSVP Form can display on'
+      sequence:
+        type: string
+        label: 'Content type'
