@@ -1,0 +1,76 @@
+<?php
+
+/**
+ * @file
+ * Contains \Drupal\rsvplist\EnablerService
+ * https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Form%21form.api.php/function/hook_form_BASE_FORM_ID_alter/10
+ * https://www.drupal.org/forums/support/module-development-and-code-questions/2015-12-19/drupal-8-submit-handler 
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+/**
+ * Implements hook_form_BASE_FORM_ID_alter() for node_form.
+ * Replace BASE_FORM_ID with the actual base form ID, e.g., 'rsvplist_form_node_form'.
+ */
+function rsvplist_form_node_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Node entity the form is responsible for.
+  $node = $form_state->getFormObject()->getEntity();
+  // Get its node type.
+  $current_node_type = $node->getType();
+  // Use the configuration API to load the rsvplist settings object.
+  $rsvp_config = \Drupal::config('rsvplist.settings');
+  // Get the allowed types for RSVP from configuration.
+  $allowed_types = $rsvp_config->get('allowed_types');
+  // Determine in this form is being display on a node type.
+  if (in_array($current_node_type, $allowed_types)) {
+    // Add the RSVP enable checkbox to the form.
+    $form['rsvplist'] = [
+      '#type' => 'details',
+      '#title' => t('RSVP collection'),
+      '#access' => \Drupal::currentUser()->hasPermission('administer rsvplist'),
+      '#group' => 'advanced',
+      '#weight' => 50,
+    ];
+    // Enabler Service: Determine if the node currently being edited has been previously set to be RSVP enabled.
+    $enabler = \Drupal::service('rsvplist.enabler');
+    $form['rsvplist']['rsvplist_enabled'] = [
+      '#type' => 'checkbox',
+      '#title' => t('Collect RSVPs email addresss for this node'),
+      '#default_value' => $enabler->isEnabled($node),
+    ];
+    // Loops through the preview and submit buttons so the action is only on the submit button.
+    foreach(array_keys($form['actions']) as $action) {
+      // Check if the action is not preview and is a submit button, and the type is 'submit'.
+      if ($action != 'preview' && isset($form['actions'][$action]['#type']) && 
+        $form['actions'][$action]['#type'] == 'submit') {
+          // Add our custom submit handler to the submit button.
+          $form['actions'][$action]['#submit'][] = 'rsvplist_form_node_form_submit';
+      }
+    }
+  }
+
+}
+/**
+ * Custom submit handler for the node form to handle RSVP enabling.
+ * @see rsvplist_form_node_form_alter()
+ * @param array $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ * @return void
+ */
+function rsvplist_form_node_form_submit($form, FormStateInterface $form_state) {
+  // Initiate the RSVP enabler service once created.
+  $enabler = \Drupal::service('rsvplist.enabler');
+  // Node entity the form is responsible for.
+  $node = $form_state->getFormObject()->getEntity();
+
+  // Get the value of the RSVP enabled checkbox.
+  $rsvp_enabled = $form_state->getValue(['rsvplist_enabled']);
+  if ($rsvp_enabled) {
+    // Use RSVP enabler service to activate RSVP's on this node.
+    $enabler->setEnabled($node);
+  }
+  else {
+    // Use RSVP enabler service to disable RSVP's on this node.
+    $enabler->delEnabled($node);
+  }
+}
