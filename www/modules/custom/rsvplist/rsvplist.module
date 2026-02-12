@@ -35,7 +35,7 @@ function rsvplist_form_node_form_alter(&$form, FormStateInterface $form_state, $
     $enabler = \Drupal::service('rsvplist.enabler');
     $form['rsvplist']['rsvplist_enabled'] = [
       '#type' => 'checkbox',
-      '#title' => t('Collect RSVPs email addresss for this node'),
+      '#title' => t('Collect RSVPs email addressses for this node'),
       '#default_value' => $enabler->isEnabled($node),
     ];
     // Loops through the preview and submit buttons so the action is only on the submit button.
